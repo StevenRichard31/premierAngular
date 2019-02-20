@@ -1,17 +1,31 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AppareilService} from './services/appareil.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-    appareilOne = 'machine à laver';
-    appareilTwo = 'machine à bois';
-    appareilThree = 'machine à manger';
+export class AppComponent implements OnInit {
+
 
     isAuth = false;
-    constructor() {
+
+    lastUpdate = new Promise(
+        (resolve, reject) => {
+            const date = new Date();
+            setTimeout(
+                () => {
+                    resolve(date);
+                }, 2000
+            );
+        }
+    );
+
+    appareils: any[];
+
+    constructor(private appareilService: AppareilService) {
       setTimeout(
           () => {
               this.isAuth = true;
@@ -19,6 +33,16 @@ export class AppComponent {
       );
     }
     onAllumer() {
-    console.log('allumer!');
+        console.log('allumer!');
+        this.appareilService.switchOnAll();
+    }
+
+    onEteindre() {
+        this.appareilService.switchOffAll();
+    }
+
+    /*Fonction executé durant la création de ce compenent et apres l'éxecution du 'constructor'*/
+    ngOnInit() {
+        this.appareils = this.appareilService.appareils;
     }
 }

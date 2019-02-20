@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { PremierComponentComponent } from './premier-component/premier-component.component';
 import { AppareilComponent } from './appareil/appareil.component';
 
+import {AppareilService} from './services/appareil.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,9 @@ import { AppareilComponent } from './appareil/appareil.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+      AppareilService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
