@@ -17,10 +17,9 @@ export class AppareilComponent implements OnInit {
     @Input() appareilName: string;
     @Input() appareilStatus: string;
     @Input() indexOfAppareil: number;
+    @Input() id: number;
 
-    private appareils = {
-        email: 'stevefgdfdfgdfgdfgn@hotmail.fr'
-    };
+
 
     constructor(private httpClient: HttpClient, private appareilService: AppareilService) { }
 
@@ -61,8 +60,11 @@ export class AppareilComponent implements OnInit {
         /*----------------TEST REQUETE API NODE ---------------------*/
 
         saveAppareilsToServer() {
+            const email = {
+                email: 'stevefgdfdfgdfgdfgn@hotmail.fr'
+            };
             this.httpClient
-            .post('http://192.168.1.41:3000/user/appareil', this.appareils)
+            .post('http://192.168.1.41:3000/user/appareil', email)
             .subscribe(
                 () => {
                     console.log('Enregistrement terminé !');
