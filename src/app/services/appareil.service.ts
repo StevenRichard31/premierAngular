@@ -43,7 +43,7 @@ export class AppareilService {
         for (const appareil of this.appareils) {
             appareil.status = 'allumé';
         }
-        // on souscrit au différent changement
+        // on souscrit au différent changement, ce qui permet de mettre à jour la liste d'objet
         this.emitAppareilSubject();
     }
 
@@ -61,6 +61,19 @@ export class AppareilService {
 
     switchOffOne(index: number) {
         this.appareils[index].status = 'éteint';
+        this.emitAppareilSubject();
+    }
+
+    addAppareil(name: string, status: string) {
+        const appareilObject = {
+            id: 0,
+            name: '',
+            status: ''
+        };
+        appareilObject.name = name;
+        appareilObject.status = status;
+        appareilObject.id = this.appareils[(this.appareils.length - 1)].id + 1;
+        this.appareils.push(appareilObject);
         this.emitAppareilSubject();
     }
 }
