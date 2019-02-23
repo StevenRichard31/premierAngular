@@ -1,5 +1,11 @@
+import {Subject} from 'rxjs';
+
 export class AppareilService {
-    appareils = [
+
+    // Role: Il doit emmètre la liste des appareil de type 'any[]'
+    appareilSubject = new Subject<any[]>();
+
+    private appareils = [
         {
             id: 1,
             name: 'machine à laver',
@@ -17,6 +23,11 @@ export class AppareilService {
         },
     ];
 
+    emitAppareilSubject() {
+        // demande à appareilSubject d'émettre une COPIE '.slice()' de 'this.appareils'
+        this.appareilSubject.next(this.appareils.slice());
+    }
+
 
     getAppareilById(id: number) {
         const appareil = this.appareils.find(
@@ -28,22 +39,28 @@ export class AppareilService {
     }
 
     switchOnAll() {
+        // on modifie tous les status en 'allumé'
         for (const appareil of this.appareils) {
             appareil.status = 'allumé';
         }
+        // on souscrit au différent changement
+        this.emitAppareilSubject();
     }
 
     switchOffAll() {
         for (const appareil of this.appareils) {
             appareil.status = 'éteint';
         }
+        this.emitAppareilSubject();
     }
 
     switchOnOne(index: number) {
         this.appareils[index].status = 'allumé';
+        this.emitAppareilSubject();
     }
 
     switchOffOne(index: number) {
         this.appareils[index].status = 'éteint';
+        this.emitAppareilSubject();
     }
 }

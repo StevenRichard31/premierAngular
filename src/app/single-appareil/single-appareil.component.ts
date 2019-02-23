@@ -19,6 +19,7 @@ export class SingleAppareilComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // selecteur du param de la route
         const id = this.route.snapshot.params['id'];
         // Le '+' avec le 'id' va caster id en number alors qu'il et de base en string
         const appareil = this.appareilService.getAppareilById(+id);
